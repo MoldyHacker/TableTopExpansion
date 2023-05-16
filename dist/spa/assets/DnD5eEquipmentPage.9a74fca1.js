@@ -1,1 +1,0 @@
-import{_ as e,J as n,K as t,Y as a}from"./index.58564a6b.js";const o=n({name:"DnD5eEquipmentPage"}),s={class:""};function c(r,p,_,i,m,d){return t(),a("div",s," Equipment ")}var u=e(o,[["render",c]]);export{u as default};
