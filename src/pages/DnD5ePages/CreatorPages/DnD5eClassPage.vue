@@ -9,94 +9,141 @@ export default defineComponent({
     return {
       userStore: useUserStore(),
       activeCharacter: {},
-      numberOptions: Array.from({ length: 20 }, (_, i) => ({ label: (i + 1).toString(), value: i + 1 })),
+      saveIcon: false,
+      numberOptions: Array.from({length: 20}, (_, i) => ({label: (i + 1).toString(), value: i + 1})),
 
-      classLevel: 1,
+      classes: [],
+      subClasses: [],
+
+
+      classLevel: '--',
       className: '',
       subClassName: '',
 
       classData: {
+        classLevel: 0,
+        className: '',
+        subClassName: '',
         classLevelString: '',
         classString: '',
-        TotalLevel: 1,
+        totalLevel: 0,
       },
 
     }
   },
   methods: {
-    update(){
-      if (this.className !== '' && this.classLevel !== 0)
-        this.userStore.updateCharacterVariable(this.id, 'classData', this.classData)
+    async fetchResults(url, requestOptions) {
+      let resultData;
+      await fetch(url, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          resultData = data;
+        })
+        .catch(error => console.error('Error in fetch request: ', error))
+      return resultData;
+    },
+    returnClasses() {
+      this.fetchResults("https://www.dnd5eapi.co/api/classes")
+        .then(data => {
+          // console.log('data: ', data)
+          this.classes = data.results.map(c => c.name);
+          // console.log('classes: ', this.classes)
+        })
+    },
+    returnSubClasses(index) {
+      this.fetchResults(`https://www.dnd5eapi.co/api/classes/${index.toLowerCase()}/subclasses`)
+        .then(data => {
+          this.subClasses = data.results.map(s => s.name)
+        })
+    },
+    handleBlur() {
+      this.returnSubClasses(this.className)
+    },
+    saveHandler(){
+      this.saveIcon = true;
+      setTimeout(() => {this.saveIcon = false},500);
+    },
+    updateClasses() {
+      // this.createClass();
+      this.userStore.updateCharacterVariable(this.id, 'classData', this.classData);
+      this.saveHandler();
     },
 
     createClass() {
-      this.classData.classes = [];
-      let classObj = {
-        classLevel: this.classLevel,
-        className: this.className,
-        subClassName: this.subClassName,
-      }
-      this.classData.classLevelString = `${this.className} ${this.classLevel}`;
+      // this.classData.classes = [];
+      // let classObj = {
+      //   classLevel: this.classLevel.value,
+      //   className: this.className,
+      //   subClassName: this.subClassName,
+      // }
+      // console.log('classObj', classObj)
+      this.classData.classLevel = this.classLevel.value;
+      this.classData.className = this.className;
+      this.classData.subClassName = this.subClassName;
+      this.classData.totalLevel = this.classLevel.value;
+      this.classData.classLevelString = `${this.className} ${this.classLevel.value}`;
       this.classData.classString = `${this.className}/${this.subClassName}`;
-      this.classData.totalLevel = this.classLevel
-      this.classData.classes.push(classObj);
-      this.update()
+      // this.classData.classes.push(classObj);
+      this.updateClasses()
     },
 
   },
-  updated() {
-
-
-  },
-
-  beforeUnmount() {
-    this.createClass();
-
-  },
   mounted() {
-    // this.userStore.activateCharacter(this.id);
+    this.returnClasses();
     this.activeCharacter = this.userStore.activeCharacter;
     this.classData = this.activeCharacter.classData;
-    // console.log('Character ID: ', this.id);
+    if (this.classData) {
+      this.className = this.classData.className;
+      this.subClassName = this.classData.subClassName;
+      this.classLevel = this.classData.classLevel;
+    }
+
   }
 })
 </script>
 
 <template>
-<!-- TODO: make a much better system for choosing classes -->
   <div class="flex flex-center q-gutter-md content-start items-start">
     <div class="characterClass column self-start">
       <span class="label text-h6">
         <strong>Character Class</strong>
       </span>
-      <q-input standout debounce="500" v-model="className" style="width: 300px"/>
+      <q-select
+        v-model="className"
+        :options="classes"
+        behavior="menu"
+        label="Class"
+        standout
+        style="width: 250px"
+        @blur="handleBlur"
+      />
     </div>
-    <div class="characterSubClass column self-start">
+    <div
+      class="characterSubClass column self-start">
       <span class="label text-h6">
         <strong>Character Subclass</strong>
       </span>
-      <q-input standout debounce="500" v-model="subClassName" style="width: 300px"/>
+      <q-select
+        v-model="subClassName"
+        :options="subClasses"
+        behavior="menu"
+        label="subclass"
+        standout
+        style="width: 250px"
+      />
     </div>
     <div class="characterClassLevel column self-start">
       <span class="label text-h6">
         <strong>Character Class Level</strong>
       </span>
-<!--      <q-input-->
-<!--        standout-->
-<!--        min="1"-->
-<!--        max="20"-->
-<!--        debounce="500"-->
-<!--        v-model="classLevel"-->
-<!--        type="number"-->
-<!--        :rules="[val => val > 0 && val <= 20 || 'Number must be greater than 0, and less than 20']"-->
-<!--        style="width: 300px"/>-->
       <q-select
-        standout
         v-model="classLevel"
         :options="numberOptions"
-        emit-value
         map-options
+        standout
+        @blur="createClass"
       />
+      <q-icon v-if="saveIcon" class="q-pt-md" name="save" size="24px"/>
     </div>
   </div>
 </template>

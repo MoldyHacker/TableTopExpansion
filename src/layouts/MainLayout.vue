@@ -16,14 +16,12 @@
           <q-badge class="q-ml-md" color="orange"> v{{ appVersion }}-alpha</q-badge>
         </q-toolbar-title>
 
-<!--        <q-btn v-if="authUser" color="purple" label="Account Settings">-->
         <q-avatar v-if="authUser" class="cursor-pointer q-mr-lg">
           <q-menu>
             <div class="row no-wrap q-pa-md">
               <div class="column">
                 <div class="text-h6 q-mb-md"> Settings   <q-btn flat round icon="settings" @click="pushToSiteSettings"><q-tooltip>Site Settings</q-tooltip></q-btn> </div>
                 <q-toggle disable v-model="darkMode" label="Dark Mode" />
-<!--                <q-toggle v-model="bluetooth" label="Bluetooth" />-->
               </div>
 
               <q-separator vertical inset class="q-mx-lg" />
@@ -50,10 +48,8 @@
             </div>
           </q-menu>
           <q-tooltip>Profile</q-tooltip>
-          <img :src="authUser.photoURL">  <!-- @click="" redirect to profile page -->
+          <img :src="authUser.photoURL">
         </q-avatar>
-<!--        </q-btn>-->
-
 
         <q-avatar v-else class="cursor-pointer q-mr-lg">
           <q-tooltip>Login</q-tooltip>
@@ -138,15 +134,20 @@ const linksList = [
     caption: 'My Characters',
     icon: 'groups',
     link: '/characters',
-    auth: true,
   },
+  // {
+  //   title: 'Equipment Reference',
+  //   caption: 'D&D 5e Equipment Reference',
+  //   icon: 'build',
+  //   link: '/equipment-dnd5e',
+  //   // newTab: false // opens link in a new tap
+  // },
   {
-    title: 'Equipment',
-    caption: 'D&D 5e Equipment Reference',
-    icon: 'build',
-    link: '/equipment-dnd5e',
-    // newTab: false // opens link in a new tap
-  }
+    title: 'Spell Reference',
+    caption: 'D&D 5e Spell Reference',
+    icon: 'auto_fix_normal',
+    link: '/spells-dnd5e',
+  },
 ]
 
 export default defineComponent({
@@ -183,13 +184,11 @@ export default defineComponent({
       .onAuthStateChanged(user => {
         this.authUser = user ? new AuthUser(user) : null;
         this.authStore.authUser = user ? new AuthUser(user) : null;
-        console.log('logged in as: ', this.authUser)
+        // console.log('logged in as: ', this.authUser)
       })
   },
 
   data () {
-    // let leftDrawerOpen = false
-
     return {
       authUser: null,
       authStore: useAuthStore(),
@@ -198,7 +197,6 @@ export default defineComponent({
       appName:productName,
       leftDrawerOpen: false,
       darkMode: false,
-
     }
   }
 })
