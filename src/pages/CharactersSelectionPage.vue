@@ -17,6 +17,7 @@ export default defineComponent({
       newCharacterDialog: false,
       deleteConfirmationDialog: false,
       characterToDelete: {},
+      characterLoading: false,
     }
   },
   methods: {
@@ -32,11 +33,15 @@ export default defineComponent({
       this.characterToDelete = characterObj;
       this.deleteConfirmationDialog = true;
     },
+
+  },
+  computed: {
   },
   created() {
     if (this.authStore.isLoaded && this.authStore.isAuthenticated){
       this.getUserCharacters();
     }
+    setTimeout(() => {this.characterLoading = true;}, 3000)
   },
 })
 </script>
@@ -47,12 +52,15 @@ export default defineComponent({
       <div class="row q-gutter-lg container items-center q-mx-auto">
         <div class="topLabel full-width">
           <div class="text-h1 text-bold">
-            My Characters <q-btn icon="person_add" rounded size="36px" class="q-px-xl addCharacterBtn cursor-pointer bg-primary text-white" @click="this.$router.push({name: 'select-creator'})"><q-tooltip>Add New Character</q-tooltip></q-btn>
+            My Characters
+            <q-btn icon="person_add" rounded size="36px" class="q-px-xl addCharacterBtn cursor-pointer bg-primary text-white" @click="this.$router.push({name: 'select-creator'})">
+              <q-tooltip>Add New Character</q-tooltip>
+            </q-btn>
           </div>
         </div>
 
         <!-- Skeleton loader card -->
-        <q-card v-show="!characterStore.allCharacters.length > 0" bordered class="card bg-grey-5" flat square style="width: 375px">
+        <q-card v-if="!characterStore.hasCharacters && !characterLoading" bordered class="card bg-grey-5" flat square style="width: 375px">
           <q-card-section horizontal style="height: 196px; width: 375px">
             <q-skeleton height="150px" width="300px" square class="self-center"/>
             <q-card-actions align="right" vertical class="justify-around q-px-md bg-grey">
@@ -64,9 +72,13 @@ export default defineComponent({
           </q-card-section>
         </q-card>
 
+        <div v-else-if="!characterStore.hasCharacters" class=" q-mt-lg" >
+          No Character Information 😢<br>
+          <q-btn @click="refreshPage">Click to Reload</q-btn>
+        </div>
         <!-- Character cards -->
         <character-selection-item
-          v-show="characterStore.allCharacters.length > 0"
+          v-show="characterStore.hasCharacters"
           v-for="data in characterStore.allCharacters"
           :key="data.id"
           :character-obj="data"
@@ -75,14 +87,10 @@ export default defineComponent({
         />
 
 
-
-
-
       </div>
-      <div v-show="characterStore.allCharacters <= 0" class="" >No Character Information 😢 <q-btn @click="refreshPage">Click to Reload</q-btn> </div>
+<!--      !hasCharacters && !storeIsLoaded-->
+
     </div>
-
-
 
 
     <div v-else class="notAuthenticated">

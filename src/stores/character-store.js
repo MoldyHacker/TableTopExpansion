@@ -165,5 +165,8 @@ export const useCharacterStore = defineStore('character', {
       // Active character is the property of the logged-in user.
       return state.activeCharacter.userId === useAuthStore().authUser.uid
     },
+    hasCharacters(state) {
+      return state.allCharacters.length > 0
+    }
   }
 })
