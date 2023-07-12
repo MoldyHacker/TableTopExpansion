@@ -12,8 +12,12 @@ export default defineComponent({
   },
   methods: {
     selectCharacter() {
-      if (this.characterStore.activeCharacter.uid !== this.id)
+      if (this.characterStore.activeCharacter.uid !== this.id && this.characterStore.isCreated) {
         this.characterStore.activateCharacter(this.id)
+        if (this.characterStore.isCreated) {
+          this.characterStore.updateCharacterVariable(this.id, 'isCreated', true)
+        }
+      }
       this.$router.push({name: 'character', params: {id: this.id}})
     },
   },

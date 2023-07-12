@@ -5,32 +5,31 @@ import {useCharacterStore} from "stores/character-store";
 
 export default defineComponent({
   name: "CharacterSelectionItem",
-  components: {},
   props: ['characterObj'],
   data() {
     return {
       character: new DnD5eCharacter(),
-      userStore: useCharacterStore(),
+      characterStore: useCharacterStore(),
       cardGameLabel: '',
       cardBg: {},
     }
   },
   methods: {
     favoriteToggle() {
-      this.userStore.toggleCharacterVariable(this.characterObj, "favorite")
+      this.characterStore.toggleCharacterVariable(this.characterObj, "favorite")
     },
     deleteCharacter() {
       this.$emit('deleteCharacter', this.characterObj)
-      // this.userStore.deleteCharacter(this.characterObj.id);
+      // this.characterStore.deleteCharacter(this.characterObj.id);
     },
     selectCharacter() {
-      if (this.userStore.activeCharacter !== this.characterObj)
-        this.userStore.activateCharacter(this.characterObj.id)
+      if (this.characterStore.activeCharacter !== this.characterObj)
+        this.characterStore.activateCharacter(this.characterObj.id)
       this.$router.push({name: 'character', params: {id: this.characterObj.id}})
     },
     updateCharacter() {
-      if (this.userStore.activeCharacter !== this.characterObj)
-        this.userStore.activateCharacter(this.characterObj.id)
+      if (this.characterStore.activeCharacter !== this.characterObj)
+        this.characterStore.activateCharacter(this.characterObj.id)
       this.$router.push({name: 'dnd5e-settings', params: {id: this.characterObj.id}})
     },
     setCardLabel(gameLabel) {this.cardGameLabel = gameLabel},
@@ -54,25 +53,24 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-card bordered class="card" dark flat square>
-    <q-card-section horizontal>
-      <!--      <q-img-->
-      <!--        class="col"-->
-      <!--        src="https://cdn.quasar.dev/img/mountains.jpg"-->
-      <!--      >-->
+  <q-card class="card" bordered dark flat square>
+    <q-card-section horizontal style="height: 196px; width: 375px">
       <div class="full-width cardBg relative-position" :style="[cardBg]">
         <div class="q-px-md q-gutter-md q-mt-none">
           <div class="gameType text-h5 z-top text-bold">{{ cardGameLabel }}</div>
           <div class="ellipsis-3-lines">
             <div class="text-h5">{{ characterObj.name }}</div>
-            <div class="text-subtitle2">Level {{ characterObj.classData.totalLevel }} | {{ characterObj.race }} | {{ characterObj.classData.classString }} </div>
+            <div class="text-subtitle2">
+              <span v-show="characterObj.classData.totalLevel">Level {{ characterObj.classData.totalLevel }} | </span>
+              <span v-show="characterObj.race"> {{ characterObj.race }} | </span>
+              <span v-show="characterObj.classData.classString">{{ characterObj.classData.classString }}</span>
+            </div>
           </div>
         </div>
         <div v-if="characterObj.campaignName" class="absolute-bottom text-h6 ellipsis campaignBg q-pl-md">Campaign: <em><strong>{{ characterObj.campaignName }}</strong></em></div>
       </div>
-      <!--      </q-img>-->
       <q-card-actions class="justify-around q-px-md bg-grey" vertical>
-        <q-btn color="primary" flat icon="visibility" round @click="selectCharacter">
+        <q-btn v-if="characterObj.isCreated" color="primary" flat icon="visibility" round @click="selectCharacter">
           <q-tooltip anchor="center right" self="center left">View</q-tooltip>
         </q-btn>
         <q-btn :icon="characterObj.favorite ? 'bookmark' : 'bookmark_outline'" color="amber" flat round @click="favoriteToggle()">

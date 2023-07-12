@@ -50,6 +50,21 @@ export default defineComponent({
             My Characters <q-btn icon="person_add" rounded size="36px" class="q-px-xl addCharacterBtn cursor-pointer bg-primary text-white" @click="this.$router.push({name: 'select-creator'})"><q-tooltip>Add New Character</q-tooltip></q-btn>
           </div>
         </div>
+
+        <!-- Skeleton loader card -->
+        <q-card v-show="!characterStore.allCharacters.length > 0" bordered class="card bg-grey-5" flat square style="width: 375px">
+          <q-card-section horizontal style="height: 196px; width: 375px">
+            <q-skeleton height="150px" width="300px" square class="self-center"/>
+            <q-card-actions align="right" vertical class="justify-around q-px-md bg-grey">
+              <q-btn color="primary" flat icon="visibility" round disable/>
+              <q-btn icon="bookmark_outline" color="amber" flat round disable/>
+              <q-btn color="black" flat icon="settings" round disable/>
+              <q-btn color="red" flat icon="delete" round disable/>
+            </q-card-actions>
+          </q-card-section>
+        </q-card>
+
+        <!-- Character cards -->
         <character-selection-item
           v-show="characterStore.allCharacters.length > 0"
           v-for="data in characterStore.allCharacters"
@@ -58,9 +73,17 @@ export default defineComponent({
           class=""
           @delete-character="deleteCharacterDialog"
         />
+
+
+
+
+
       </div>
       <div v-show="characterStore.allCharacters <= 0" class="" >No Character Information 😢 <q-btn @click="refreshPage">Click to Reload</q-btn> </div>
     </div>
+
+
+
 
     <div v-else class="notAuthenticated">
       <div class="row q-gutter-lg container text-center items-center q-mx-auto">
@@ -84,8 +107,11 @@ export default defineComponent({
       </div>
 <!--      <div v-show="characterStore.allCharacters <= 0" class="" >No Character Information 😢 <q-btn @click="refreshPage">Click to Reload</q-btn> </div>-->
     </div>
+
+
   </q-page>
 
+<!--  Character delete confirmation dialog -->
   <q-dialog v-model="deleteConfirmationDialog">
     <q-card>
       <q-card-section>
