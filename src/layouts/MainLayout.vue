@@ -7,12 +7,13 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <span class="appTitle cursor-pointer" @click="this.$router.push({name: 'index'})">
-            <q-avatar>
-              <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-            </q-avatar>
-            {{ appName }}
-          </span>
+          <q-img src="icons/branding-logo-nav.png" width="150px"></q-img>
+<!--          <span class="appTitle cursor-pointer" @click="this.$router.push({name: 'index'})">-->
+<!--            <q-avatar>-->
+<!--              <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">-->
+<!--            </q-avatar>-->
+<!--            {{ appName }}-->
+<!--          </span>-->
           <q-badge class="q-ml-md" color="orange"> v{{ appVersion }}-alpha</q-badge>
         </q-toolbar-title>
 

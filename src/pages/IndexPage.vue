@@ -1,6 +1,7 @@
 <template>
   <div class="text-center q-ma-xl index text-h1 text-cyan text-bold">
-    Welcome to <br> TTE!
+    Welcome!<br>
+<!--    <q-img src="icons/branding-logo-small.png" width="320px"></q-img>-->
   </div>
   <q-page class="flex flex-block justify-center ">
     <div v-if="authStore.authUser" class="authenticated text-h3">
