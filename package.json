@@ -1,8 +1,8 @@
 {
   "name": "tabletopexpansion",
-  "version": "0.0.1",
-  "description": "A Quasar Project",
-  "productName": "Table Top Expansion",
+  "version": "0.0.2",
+  "description": "The last app you'll need for your tabletop games.",
+  "productName": "Tabletop Expansion",
   "author": "moldyhacker <56985918+MoldyHacker@users.noreply.github.com>",
   "private": true,
   "scripts": {

@@ -1,4 +1,5 @@
-
+import {useUserStore} from "stores/user-store";
+import {useCharacterStore} from "stores/character-store";
 const routes = [
   {
     path: '/',
@@ -11,8 +12,10 @@ const routes = [
       { name: 'character', path: '/character/:id', component: () => import('pages/GamePage.vue'), props: true },
       { name: 'creator-dnd5e', path: '/character/:id/creator/dnd5e', component: () => import('layouts/DnD5eCharacterCreatorLayout.vue'),
         props: true,
+        // beforeRouteEnter: (to, from) => {
+        // return useCharacterStore().isUserCharacter;
+        // },
         children: [
-          // { path: '', redirect: '/character/:id/creator/dnd5e/settings' },
           { name: 'dnd5e-settings', path: 'settings', component: () => import('pages/DnD5ePages/CreatorPages/DnD5eSettingsPage.vue'), props: true  },
           { name: 'dnd5e-race', path: 'race', component: () => import('pages/DnD5ePages/CreatorPages/DnD5eRacePage.vue'), props: true  },
           { name: 'dnd5e-class', path: 'class', component: () => import('pages/DnD5ePages/CreatorPages/DnD5eClassPage.vue'), props: true },
@@ -31,9 +34,13 @@ const routes = [
   // Always leave this as last one,
   // but you can also remove it
   {
+    path: '/:denied',
+    component: () => import('pages/ErrorInsufficientPermissions.vue')
+  },
+  {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue')
-  }
+  },
 ]
 
 export default routes

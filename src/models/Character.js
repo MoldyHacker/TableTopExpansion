@@ -6,10 +6,14 @@ export default function Character(id, data) {
 
   return {
     id: id,
+    isPublic: data.isPublic ?? false,
+    isCreated: data.isCreated ?? false,
+    userId: data.userId ?? '',
     gameType: data.gameType ?? '',
     campaignName: data.campaignName ?? '',
     favorite: data.favorite ?? false,
     name: data.name ?? '',
+    avatarURL: data.avatarURL ?? '',
     race: data.race ?? '',
     inspiration: false,
     health: data.health ?? {
@@ -21,14 +25,14 @@ export default function Character(id, data) {
     // Ability Scores
     abilityScores: data.abilityScores ?? {
       baseAbilityScores: { str: 10, dex: 10, con: 10, int: 10, wis: 10, cha: 10 },
-      abilityScoreRacialBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-      abilityScoreImprovements: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-      abilityScoreMiscBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-      abilityScoreStackingBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-      abilityScoreSetScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-      abilityScoreOtherModifiers: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-      abilityScoreOverrides: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
-      abilityScoreModifiers: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+      abilityScoresRacialBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+      abilityScoresImprovements: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+      abilityScoresMiscBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+      abilityScoresStackingBonuses: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+      abilityScoresSetScores: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+      abilityScoresOtherModifiers: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+      abilityScoresOverrides: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
+      abilityScoresModifiers: { str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 },
     },
     scoreProficiencies: data.scoreProficiencies ?? {},
     get abilityScoresTotal() { return this.abilityScores.baseAbilityScores},
@@ -41,7 +45,7 @@ export default function Character(id, data) {
     // armorClass: {
     get totalArmorClass() {},
     armor: data.armor ?? {score: 0, name: ''},
-    get ArmorBonus() {},
+    get armorBonus() {},
     shield: data.shield ?? {score: 0, name: ''},
     get shieldBonus() {},
     miscArmorBonus: data.miscArmorBonus ?? 0,
@@ -51,10 +55,10 @@ export default function Character(id, data) {
       walking: {
         speed: 30,
         source: 'Players Handbook' },
-      climbing: {},
-      swimming: {},
-      flying: {},
-      burrowing: {}
+      climbing: 0,
+      swimming: 0,
+      flying: 0,
+      burrowing: 0
     },
     level: data.level ?? '',
     classData: data.classData ?? {
@@ -67,19 +71,13 @@ export default function Character(id, data) {
         },
       ],
     },
-    get characterLevel() {
-      return this.classData.classes.length;
-    },
-    get classLevels(){
-      return null;
-    },
     // creationDate: data.creationDate ?? firebase.firestore.FieldValue.serverTimestamp(),
     // updateDate: firebase.firestore.FieldValue.serverTimestamp(),
     // proficienciesAndLanguages: data.proficienciesAndLanguages ?? {
-    profArmor: data.profArmor ?? [{}],
-    profWeapons: data.profWeapons ?? [{}],
-    profTools: data.profTools ?? [{}],
-    profLanguages: data.profLanguages ?? [ { name: 'Common', source: 'Players Handbook' } ],
+    armorProficiencies: data.armorProficiencies ?? [{}],
+    weaponProficiencies: data.weaponProficiencies ?? [{}],
+    toolProficiencies: data.toolProficiencies ?? [{}],
+    languagesKnown: data.languagesKnown ?? [ { name: 'Common', source: 'Players Handbook' } ],
     // },
     inventory: data.inventory ?? { money: { cp: 0, sp: 0, ep: 0, gp: 0, pp: 0 }, equipment: {}, backpack: {}, },
     notes: data.notes ?? { organizations: '', allies: '', enemies: '', backstory: '', others: '' },
@@ -94,12 +92,10 @@ export default function Character(id, data) {
       flaws: '',
       appearance: '',
       characteristics: {
-        alignment: '',
         gender: '',
         eyes: '',
         size: 'Medium',
         height: '',
-        faith: '',
         hair: '',
         skin: '',
         age: 0,

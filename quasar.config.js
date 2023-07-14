@@ -34,6 +34,7 @@ module.exports = configure(function (/* ctx */) {
       'i18n',
       'axios',
       'firebase',
+      'addressbar-color',
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -120,7 +121,10 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Loading',
+        'AddressbarColor'
+      ]
     },
 
     animations: 'all', // --- includes all animations

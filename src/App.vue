@@ -1,27 +1,53 @@
 <template>
-  <router-view v-if="authStore.isLoaded"/>
-  <div v-else class="loading text-h1 text-bold">Loading...</div>
+  <router-view v-if="authStore.isLoaded" />
+  <div v-else class="loading text-h1 text-bold"></div>
 </template>
 
 <script>
-import {defineComponent, onMounted} from 'vue'
-import { useAuthStore } from "stores/auth-store";
+import {defineComponent} from 'vue'
+import { useUserStore } from "stores/user-store";
 import {auth} from "boot/firebase";
 import AuthUser from "src/models/AuthUser";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: 'App',
   data(){
     return {
-      authStore: useAuthStore(),
+      authStore: useUserStore(),
+      $q: useQuasar(),
     }
   },
-  created() {
-    auth
-      .onAuthStateChanged(user => {
-        this.authStore.setUser(user ? new AuthUser(user) : null);
-        this.authStore.isLoaded = true;
+  methods: {
+    showLoading () {
+      this.$q.loading.show({
+        message: 'Loading user profile. Hang on...',
       })
+    },
+
+    endLoading() {
+      setTimeout(() => {this.$q.loading.hide()}, 100)
+    },
+
+  },
+  beforeUnmount() {
+    this.$q.loading.hide()
+  },
+  mounted() {
+    this.showLoading()
+    this.authStore.init().then(() => {this.endLoading()});
+    // auth
+    //   .onAuthStateChanged(user => {
+    //     this.authStore.setUser(user ? new AuthUser(user) : null);
+    //     this.authStore.isLoaded = true;
+    //   })
+
   }
 })
 </script>
+
+<style>
+.loading {
+  background-color: #0d47a1;
+}
+</style>

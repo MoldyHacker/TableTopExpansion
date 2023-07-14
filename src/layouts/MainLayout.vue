@@ -2,17 +2,18 @@
   <q-layout view="hHh lpR fFf" :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'">
     <div class=""></div>
 
-    <q-header reveal elevated class="bg-primary text-white">
+    <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <span class="appTitle cursor-pointer" @click="this.$router.push({name: 'index'})">
-            <q-avatar>
-              <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-            </q-avatar>
-            {{ appName }}
-          </span>
+          <q-img src="icons/branding-logo.svg" width="100px" class="appTitle cursor-pointer q-my-xs" @click="this.$router.push({name: 'index'})"></q-img>
+<!--          <span class="appTitle cursor-pointer" @click="this.$router.push({name: 'index'})">-->
+<!--            <q-avatar>-->
+<!--              <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">-->
+<!--            </q-avatar>-->
+<!--            {{ appName }}-->
+<!--          </span>-->
           <q-badge class="q-ml-md" color="orange"> v{{ appVersion }}-alpha</q-badge>
         </q-toolbar-title>
 
@@ -126,7 +127,7 @@ import EssentialLink from "components/EssentialLink.vue";
 import {auth} from "boot/firebase";
 import firebase from "firebase";
 import AuthUser from "src/models/AuthUser";
-import { useAuthStore } from "stores/auth-store";
+import { useUserStore } from "stores/user-store";
 
 const linksList = [
   {
@@ -191,7 +192,7 @@ export default defineComponent({
   data () {
     return {
       authUser: null,
-      authStore: useAuthStore(),
+      authStore: useUserStore(),
       essentialLinks: linksList,
       appVersion:version,
       appName:productName,
