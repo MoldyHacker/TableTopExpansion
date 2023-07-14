@@ -34,6 +34,7 @@ module.exports = configure(function (/* ctx */) {
       'i18n',
       'axios',
       'firebase',
+      'addressbar-color',
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -106,7 +107,7 @@ module.exports = configure(function (/* ctx */) {
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
       config: {
-        dark: false, // auto or bool
+        dark: auto, // auto or bool
       },
 
       // iconSet: 'material-icons', // Quasar icon set
@@ -121,7 +122,8 @@ module.exports = configure(function (/* ctx */) {
 
       // Quasar plugins
       plugins: [
-        'Loading'
+        'Loading',
+        'AddressbarColor'
       ]
     },
 

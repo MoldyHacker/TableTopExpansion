@@ -41,7 +41,7 @@ export default defineComponent({
     if (this.authStore.isLoaded && this.authStore.isAuthenticated){
       this.getUserCharacters();
     }
-    setTimeout(() => {this.characterLoading = true;}, 3000)
+    setTimeout(() => {this.characterLoading = true;}, 500)
   },
 })
 </script>

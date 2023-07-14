@@ -2,12 +2,12 @@
   <q-layout view="hHh lpR fFf" :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'">
     <div class=""></div>
 
-    <q-header reveal elevated class="bg-primary text-white">
+    <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <q-img src="icons/branding-logo-nav.png" width="150px"></q-img>
+          <q-img src="icons/branding-logo.svg" width="100px" class="appTitle cursor-pointer q-my-xs" @click="this.$router.push({name: 'index'})"></q-img>
 <!--          <span class="appTitle cursor-pointer" @click="this.$router.push({name: 'index'})">-->
 <!--            <q-avatar>-->
 <!--              <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">-->
