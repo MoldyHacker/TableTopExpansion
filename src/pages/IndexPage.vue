@@ -17,13 +17,13 @@
 
 <script>
 import { defineComponent } from 'vue'
-import {useAuthStore} from "stores/auth-store";
+import {useUserStore} from "stores/user-store";
 
 export default defineComponent({
   name: 'IndexPage',
   data(){
     return {
-      authStore: useAuthStore(),
+      authStore: useUserStore(),
     }
   }
 })

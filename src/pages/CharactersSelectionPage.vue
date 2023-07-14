@@ -3,7 +3,7 @@ import { defineComponent } from 'vue'
 import { useCharacterStore } from "stores/character-store";
 import Character from "src/models/Character";
 import CharacterSelectionItem from "components/CharacterSelectionItem.vue";
-import { useAuthStore } from "stores/auth-store";
+import { useUserStore } from "stores/user-store";
 
 
 export default defineComponent({
@@ -13,7 +13,7 @@ export default defineComponent({
     return{
       newCharacter: new Character(),
       characterStore: useCharacterStore(),
-      authStore: useAuthStore(),
+      authStore: useUserStore(),
       newCharacterDialog: false,
       deleteConfirmationDialog: false,
       characterToDelete: {},

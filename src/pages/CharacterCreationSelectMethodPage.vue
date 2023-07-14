@@ -2,14 +2,14 @@
 import {defineComponent} from 'vue'
 import {db} from "boot/firebase";
 import {useCharacterStore} from "stores/character-store";
-import {useAuthStore} from "stores/auth-store";
+import {useUserStore} from "stores/user-store";
 
 export default defineComponent({
   name: "CharacterCreationSelectMethodPage",
   data() {
     return {
       characterStore: useCharacterStore(),
-      authStore: useAuthStore(),
+      authStore: useUserStore(),
     }
   },
   methods: {

@@ -127,7 +127,7 @@ import EssentialLink from "components/EssentialLink.vue";
 import {auth} from "boot/firebase";
 import firebase from "firebase";
 import AuthUser from "src/models/AuthUser";
-import { useAuthStore } from "stores/auth-store";
+import { useUserStore } from "stores/user-store";
 
 const linksList = [
   {
@@ -192,7 +192,7 @@ export default defineComponent({
   data () {
     return {
       authUser: null,
-      authStore: useAuthStore(),
+      authStore: useUserStore(),
       essentialLinks: linksList,
       appVersion:version,
       appName:productName,

@@ -1,4 +1,4 @@
-import {useAuthStore} from "stores/auth-store";
+import {useUserStore} from "stores/user-store";
 import {useCharacterStore} from "stores/character-store";
 const routes = [
   {

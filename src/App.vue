@@ -5,7 +5,7 @@
 
 <script>
 import {defineComponent} from 'vue'
-import { useAuthStore } from "stores/auth-store";
+import { useUserStore } from "stores/user-store";
 import {auth} from "boot/firebase";
 import AuthUser from "src/models/AuthUser";
 import { useQuasar } from "quasar";
@@ -14,7 +14,7 @@ export default defineComponent({
   name: 'App',
   data(){
     return {
-      authStore: useAuthStore(),
+      authStore: useUserStore(),
       $q: useQuasar(),
     }
   },

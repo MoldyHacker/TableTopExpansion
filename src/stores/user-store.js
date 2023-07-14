@@ -8,7 +8,7 @@ import firebase from "firebase";
  * User Store: Handles user authentication, profile information, site settings, and user-related actions.
 */
 
-export const useAuthStore = defineStore('auth',{
+export const useUserStore = defineStore('user',{
   state: () => ({
     authUser: null,
     isLoaded: false,

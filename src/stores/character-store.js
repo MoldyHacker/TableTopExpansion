@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { db, storage } from "boot/firebase";
 import Character from "src/models/Character";
-import {useAuthStore} from "stores/auth-store";
+import {useUserStore} from "stores/user-store";
 
 /*
  * Character Store: Manages the state and actions related to character data, such as creating, updating, and retrieving character information.
@@ -29,7 +29,7 @@ export const useCharacterStore = defineStore('character', {
         .doc(`characters/${characterId}`)
         .onSnapshot((doc) => {
           const tempCharacter = new Character(doc.id, doc.data());
-          if (!tempCharacter.isPublic && tempCharacter.userId === useAuthStore().authUser.uid) {
+          if (!tempCharacter.isPublic && tempCharacter.userId === useUserStore().authUser.uid) {
             this.activeCharacter = tempCharacter;
           } else if (tempCharacter.isPublic) {
             this.activeCharacter = tempCharacter;
@@ -43,7 +43,7 @@ export const useCharacterStore = defineStore('character', {
       this.allCharacters = [];
       db
         // .collection(`users/${auth.currentUser.uid}/characters/`)
-        .collection(`characters/`).where("userId", "==", useAuthStore().authUser.uid)
+        .collection(`characters/`).where("userId", "==", useUserStore().authUser.uid)
         .onSnapshot((querySnapshot) => {
           this.allCharacters.length = 0;
           querySnapshot.forEach((doc) => {
@@ -163,7 +163,7 @@ export const useCharacterStore = defineStore('character', {
     },
     isUserCharacter(state) {
       // Active character is the property of the logged-in user.
-      return state.activeCharacter.userId === useAuthStore().authUser.uid
+      return state.activeCharacter.userId === useUserStore().authUser.uid
     },
     hasCharacters(state) {
       return state.allCharacters.length > 0
