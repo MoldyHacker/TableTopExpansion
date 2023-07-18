@@ -15,6 +15,8 @@ export default function Character(id, data) {
     name: data.name ?? '',
     avatarURL: data.avatarURL ?? '',
     race: data.race ?? '',
+    subRace: data.subRace ?? '',
+    raceLabel: data.raceLabel ?? '',
     inspiration: false,
     health: data.health ?? {
       current: 1,

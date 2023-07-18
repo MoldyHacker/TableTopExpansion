@@ -7,7 +7,7 @@ export default defineComponent({
   props: ['id'],
   data() {
     return {
-      userStore: useCharacterStore(),
+      characterStore: useCharacterStore(),
       activeCharacter: {},
       races: [],
       subRaces: [],
@@ -79,9 +79,9 @@ export default defineComponent({
     },
     update() {
       if (this.subRaces.length !== 0)
-        this.userStore.updateCharacterVariable(this.id, 'race', this.finalRace);
+        this.characterStore.updateCharacterVariable(this.id, 'race', this.finalRace);
       else
-        this.userStore.updateCharacterVariable(this.id, 'race', this.characterRace);
+        this.characterStore.updateCharacterVariable(this.id, 'race', this.characterRace);
       this.saveHandler();
     },
     filterFn(val, update) {
@@ -99,7 +99,7 @@ export default defineComponent({
   },
   mounted() {
     this.returnRaces();
-    this.activeCharacter = this.userStore.activeCharacter;
+    this.activeCharacter = this.characterStore.activeCharacter;
     if (this.activeCharacter.race)
       this.characterRace = this.activeCharacter.race;
   },

@@ -13,15 +13,21 @@ export default defineComponent({
   methods: {
     selectCharacter() {
       if (this.characterStore.activeCharacter.uid !== this.id && this.characterStore.isCreated) {
-        this.characterStore.activateCharacter(this.id)
-        if (this.characterStore.isCreated) {
+        // this.characterStore.activateCharacter(this.id)
+        if (!this.characterStore.activeCharacter.isCreated) {
           this.characterStore.updateCharacterVariable(this.id, 'isCreated', true)
         }
       }
       this.$router.push({name: 'character', params: {id: this.id}})
     },
+    createdCharacter(){if (this.characterStore.isCreated && !this.characterStore.activeCharacter.isCreated){
+      this.characterStore.updateCharacterVariable(this.id, 'isCreated', true)
+    }},
   },
   computed: {
+  },
+  updated() {
+    this.createdCharacter()
   },
   mounted() {
 
@@ -39,7 +45,7 @@ export default defineComponent({
       <div class="layout text-white">
         <q-toolbar>
           <q-toolbar-title>
-            DnD5e | Character Creator: {{ characterStore.activeCharacter.name }}
+            DnD5e | Character Creator: {{ characterStore.activeCharacter?.name }}
           </q-toolbar-title>
         </q-toolbar>
 

@@ -9,7 +9,7 @@ export default defineComponent({
   props: ['id'],
   data() {
     return {
-      userStore: useCharacterStore(),
+      characterStore: useCharacterStore(),
       activeCharacter: {},
       characterName: '',
       saveIcon: false,
@@ -25,7 +25,7 @@ export default defineComponent({
   methods: {
     update() {
       if (this.characterName)
-        this.userStore.updateCharacterVariable(this.id, 'name', this.characterName);
+        this.characterStore.updateCharacterVariable(this.id, 'name', this.characterName);
       this.saveHandler();
     },
 
@@ -129,17 +129,19 @@ export default defineComponent({
     fileImportError(error) {
       this.importError = error;
       this.importErrorDialog = true;
-      this.cancelFileUpload();
+      this.closeFileImport();
     },
 
-    cancelFileUpload() {
+    closeFileImport() {
       this.userUpload = null;
       this.uploadingState = false;
+      this.importDialog = false;
+
     },
   },
   mounted() {
-    // this.userStore.activateCharacter(this.id);
-    this.activeCharacter = this.userStore.activeCharacter;
+    // this.characterStore.activateCharacter(this.id);
+    this.activeCharacter = this.characterStore.activeCharacter;
     this.characterName = this.activeCharacter.name;
     // console.log('Character ID: ', this.id);
   }
@@ -201,7 +203,7 @@ export default defineComponent({
       </q-card-section>
 
       <q-card-actions align="right" class="text-primary">
-        <q-btn v-close-popup flat label="Cancel" @click="cancelFileUpload"/>
+        <q-btn v-close-popup flat label="Cancel" @click="closeFileImport"/>
         <!--        <q-btn flat label="Upload Character" @click="uploadFile(userUpload)" />-->
         <q-btn :loading="uploadingState" color="primary" flat label="Upload Character" @click="handleFileImport(userUpload)">
           <!--        Button-->
@@ -243,7 +245,7 @@ export default defineComponent({
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="primary" v-close-popup />
+        <q-btn flat label="OK" color="primary" @click="closeFileImport" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
