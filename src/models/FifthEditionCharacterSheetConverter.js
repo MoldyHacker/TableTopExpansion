@@ -262,26 +262,17 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
     maxDex: parseInt(getData("maxDex")),
 
     proficiencyBonus: parseInt(getData("proficiencyBonus")),
+
     miscSpellAttackBonus: parseInt(getData("miscSpellAttackBonus")),
     miscSpellDCBonus: parseInt(getData("miscSpellDCBonus")),
-
-    castingStatCode: parseInt(getData("castingStatCode")),
-
-    // deathSaveSuccesses: parseInt(getData("deathSaveSuccesses")), // not needed
-    // deathSaveFailures: parseInt(getData("deathSaveFailures")), // not needed
-    // showDeathSaves: getData("showDeathSaves") === 'true', // not needed
-    // raceCode: parseInt(getData("raceCode")), // not used
-    // subraceCode: parseInt(getData("subraceCode")), // not used
-    // backgroundCode: parseInt(getData("backgroundCode")), // not used
-    // featCode: getData("featCode"), // not used
-    // multiclassFeatures: getData("multiclassFeatures"), // not used
+    // castingStatCode: parseInt(getData("castingStatCode")), // not used as of 7/18/23
 
     offenseAbilityDisplay: parseInt(getData("offenseAbilityDisplay")),
 
-    // baseSpeed: parseInt(getData("baseSpeed")), // Implemented in movement speed
-    // speedMiscMod: parseInt(getData("speedMiscMod")), // Implemented in movement speed
-    // movementMode: getData("movementMode"), // Implemented in movement speed
     movementSpeed: {
+      // baseSpeed: parseInt(getData("baseSpeed")), // Implemented in movement speed
+      // speedMiscMod: parseInt(getData("speedMiscMod")), // Implemented in movement speed
+      // movementMode: getData("movementMode"), // Implemented in movement speed
       activeMovementSpeed: 'walking',
       walking: parseInt(getData("baseSpeed")) + parseInt(getData("speedMiscMod")),
       walkingNotes: '',
@@ -296,10 +287,12 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
     },
 
     classData: parseClasses(getData("classData").split('⊟')[0]),
+    // classCustom: getData("noteList").split('⊠')[7], // User filled class
+    // classLabel: getData("noteList").split('⊠')[16], // class user filled
 
     characterLevel: getCharacterLevel(getData("classData").split('⊟')[0]),
-    resources: getData("classData").split('⊟')[2].split('⊠'),
-    feats: getData("classData").split('⊟')[3].split('⊠'),
+    resources: parseResources(getData("classData").split('⊟')[2]),
+    feats: getData("classData").split('⊟')[3].split('⊠').filter(el => el).sort(),
     asi: getData("classData").split('⊟')[4].split('⊡'),
 
     abilityScores: parseAbilityScores(getData("abilityScores")),
@@ -309,21 +302,13 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
     skillInfo: parseSkillInfo(getData("skillInfo")),
     spellList: getData("spellList").split('⊠'),
 
-
-    // classDataBackground: getData("classData").split('⊟')[9],
-    // notesListBackground: getData("noteList").split('⊠')[9],
     get background() {return getData("classData").split('⊟')[9] === 'Custom' ? getData("noteList").split('⊠')[9] : getData("classData").split('⊟')[9]},
 
     race: getData("classData").split('⊟')[7],
-    // classDataRaceLabel: getData("classData").split('⊟')[8],
-    // notesListRaceLabel: getData("noteList").split('⊠')[8],
     get raceLabel() {return getData("classData").split('⊟')[8] === 'Custom Lineage' ? getData("noteList").split('⊠')[8] : getData("classData").split('⊟')[8]},
 
 
-    // noteList: getData("noteList").split('⊠'), // Implemented in all options below
     description: {
-      languagesKnown: getData("noteList").split('⊠')[4].split("\n"),
-
       characterDetails: {
         alignment: getData("noteList").split('⊠')[10],
         faith: '',
@@ -356,15 +341,17 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
     },
 
     features: getData("noteList").split('⊠')[0],
-    armorProficiencies: getData("noteList").split('⊠')[1].split("\n").filter(el => el),
-    weaponProficiencies: getData("noteList").split('⊠')[2].split("\n").filter(el => el),
-    toolProficiencies: getData("noteList").split('⊠')[3].split("\n").filter(el => el),
-    equipment: getData("noteList").split('⊠')[5].split("\n").filter(el => el),
-    classCustom: getData("noteList").split('⊠')[7], // User filled class
 
+    proficienciesAndLanguages: {
+      armorProficiencies: getData("noteList").split('⊠')[1].split("\n").filter(el => el).sort(),
+      weaponProficiencies: getData("noteList").split('⊠')[2].split("\n").filter(el => el).sort(),
+      toolProficiencies: getData("noteList").split('⊠')[3].split("\n").filter(el => el).sort(),
+      languagesKnown: getData("noteList").split('⊠')[4].split("\n").filter(el => el).sort(),
+    },
+
+    equipment: getData("noteList").split('⊠')[5].split("\n").filter(el => el),
 
     name: getData("noteList").split('⊠')[15],
-    classLabel: getData("noteList").split('⊠')[16], // class user filled
     money: {
       cp: parseInt(getData("noteList").split('⊠')[17]),
       sp: parseInt(getData("noteList").split('⊠')[18]),
@@ -377,6 +364,6 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
 
     hitDiceList: parseHitDice(getData("hitDiceList")),
 
-    classResource: getData("classResource").split('⊠'),
+    // classResource: getData("classResource").split('⊠'), // not used as of 7/18/23
   };
 }
