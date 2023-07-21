@@ -193,19 +193,32 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
     const resourceGroups = resourceString.split('⊠');
     let resources = [];
 
-    // for (let i = 0; i < resourceGroups.length; i++) {}
     for (const resourceGroup of resourceGroups) {
       const resource = resourceGroup.split('⊡');
+      /*
+      * index | resource
+      *  0 | name
+      *  1 | display name
+      *  2 | max value
+      *  3 | current value
+      *  4 | size of the dice
+      *  5 | 1 === spendable, 2 === static
+      *  6 | number regained on short rest
+      *  7 | number regained on a long red
+      *  8 | ?
+      *  9 | ?
+      */
       const name = resource[0];
       const displayName = resource[1];
       const maxValue = parseInt(resource[2]);
-      // const currentValue = parseInt(resource[3]);
+      // const currentValue = parseInt(resource[3]); // original
+      const currentValue = parseInt(resource[2]); // current value is set to the max value
       const dieSize = parseInt(resource[4]);
       const spendable = parseInt(resource[5]); // spendable == 1, static == 2
-      const reset = parseInt(resource[1]);
+      // const reset = parseInt(resource[1]);
       const regainShort = parseInt(resource[6]);
       const regainLong = parseInt(resource[7]);
-      resources.push({name,displayName,maxValue,dieSize,spendable,reset,regainShort,regainLong});
+      resources.push({name,displayName,maxValue,currentValue,dieSize,spendable,regainShort,regainLong});
     }
 
     return resources;
