@@ -121,6 +121,8 @@ export default defineComponent({
 
         console.log(characterJSON);
 
+        // this.characterStore.importCharacter(this.id,characterJSON)
+
         setTimeout(() => {this.uploadingState = false; this.importSuccessDialog = true;}, 500)
 
       }

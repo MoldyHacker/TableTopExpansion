@@ -103,6 +103,6 @@ export default function Character(id, data) {
         age: 0,
         weight: 0
       }
-    }
+    },
   }
 }

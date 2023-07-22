@@ -107,6 +107,16 @@ export const useCharacterStore = defineStore('character', {
       })
     },
 
+    importCharacter(characterId, data) {
+      db.doc(`characters/${characterId}`).set(data)
+        .then(() => {
+          console.log(`Character: ${characterId} imported with data ${data}`);
+        })
+        .catch((error) => {
+          console.error("Error writing document", error);
+        })
+    },
+
     //TODO: make update and toggle both use the characterId instead of the whole object
 
     updateCharacterVariable(characterId, variable, data) {

@@ -64,12 +64,12 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
         cha: parseInt(abilityScoresComponents[5])
       },
       abilitySaveProficiencies: {
-        str: abilityScoresComponents[6],
-        dex: abilityScoresComponents[7],
-        con: abilityScoresComponents[8],
-        int: abilityScoresComponents[9],
-        wis: abilityScoresComponents[10],
-        cha: abilityScoresComponents[11]
+        str: abilityScoresComponents[6] === "true",
+        dex: abilityScoresComponents[7] === "true",
+        con: abilityScoresComponents[8] === "true",
+        int: abilityScoresComponents[9] === "true",
+        wis: abilityScoresComponents[10] === "true",
+        cha: abilityScoresComponents[11] === "true"
       },
       abilitySaveMisc: {
         str: parseInt(abilityScoresComponents[12]),
@@ -87,84 +87,84 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
     console.log(proficiencyComponents[9])
     return {
       skillProficiencies: {
-        athletics: proficiencyComponents[0],
-        acrobatics: proficiencyComponents[1],
-        slightOfHand: proficiencyComponents[2],
-        stealth: proficiencyComponents[3],
-        arcana: proficiencyComponents[4],
-        history: proficiencyComponents[5],
-        investigation: proficiencyComponents[6],
-        nature: proficiencyComponents[7],
-        religion: proficiencyComponents[8],
-        animalHandling: proficiencyComponents[9],
-        insight: proficiencyComponents[10],
-        medicine: proficiencyComponents[11],
-        perception: proficiencyComponents[12],
-        survival: proficiencyComponents[13],
-        deception: proficiencyComponents[14],
-        intimidation: proficiencyComponents[15],
-        performance: proficiencyComponents[16],
-        persuasion: proficiencyComponents[17]
+        athletics: proficiencyComponents[0] === "true",
+        acrobatics: proficiencyComponents[1] === "true",
+        slightOfHand: proficiencyComponents[2] === "true",
+        stealth: proficiencyComponents[3] === "true",
+        arcana: proficiencyComponents[4] === "true",
+        history: proficiencyComponents[5] === "true",
+        investigation: proficiencyComponents[6] === "true",
+        nature: proficiencyComponents[7] === "true",
+        religion: proficiencyComponents[8] === "true",
+        animalHandling: proficiencyComponents[9] === "true",
+        insight: proficiencyComponents[10] === "true",
+        medicine: proficiencyComponents[11] === "true",
+        perception: proficiencyComponents[12] === "true",
+        survival: proficiencyComponents[13] === "true",
+        deception: proficiencyComponents[14] === "true",
+        intimidation: proficiencyComponents[15] === "true",
+        performance: proficiencyComponents[16] === "true",
+        persuasion: proficiencyComponents[17] === "true"
       },
       skillDoubleProficiencies: {
-        athletics: proficiencyComponents[38],
-        acrobatics: proficiencyComponents[39],
-        slightOfHand: proficiencyComponents[40],
-        stealth: proficiencyComponents[41],
-        arcana: proficiencyComponents[42],
-        history: proficiencyComponents[43],
-        investigation: proficiencyComponents[44],
-        nature: proficiencyComponents[45],
-        religion: proficiencyComponents[46],
-        animalHandling: proficiencyComponents[47],
-        insight: proficiencyComponents[48],
-        medicine: proficiencyComponents[49],
-        perception: proficiencyComponents[50],
-        survival: proficiencyComponents[51],
-        deception: proficiencyComponents[52],
-        intimidation: proficiencyComponents[53],
-        performance: proficiencyComponents[54],
-        persuasion: proficiencyComponents[55]
+        athletics: proficiencyComponents[38] === "true",
+        acrobatics: proficiencyComponents[39] === "true",
+        slightOfHand: proficiencyComponents[40] === "true",
+        stealth: proficiencyComponents[41] === "true",
+        arcana: proficiencyComponents[42] === "true",
+        history: proficiencyComponents[43] === "true",
+        investigation: proficiencyComponents[44] === "true",
+        nature: proficiencyComponents[45] === "true",
+        religion: proficiencyComponents[46] === "true",
+        animalHandling: proficiencyComponents[47] === "true",
+        insight: proficiencyComponents[48] === "true",
+        medicine: proficiencyComponents[49] === "true",
+        perception: proficiencyComponents[50] === "true",
+        survival: proficiencyComponents[51] === "true",
+        deception: proficiencyComponents[52] === "true",
+        intimidation: proficiencyComponents[53] === "true",
+        performance: proficiencyComponents[54] === "true",
+        persuasion: proficiencyComponents[55] === "true"
       },
       skillHalfProficiencies: {
-        athletics: proficiencyComponents[57],
-        acrobatics: proficiencyComponents[58],
-        slightOfHand: proficiencyComponents[59],
-        stealth: proficiencyComponents[60],
-        arcana: proficiencyComponents[61],
-        history: proficiencyComponents[62],
-        investigation: proficiencyComponents[63],
-        nature: proficiencyComponents[64],
-        religion: proficiencyComponents[65],
-        animalHandling: proficiencyComponents[66],
-        insight: proficiencyComponents[67],
-        medicine: proficiencyComponents[68],
-        perception: proficiencyComponents[69],
-        survival: proficiencyComponents[70],
-        deception: proficiencyComponents[71],
-        intimidation: proficiencyComponents[72],
-        performance: proficiencyComponents[73],
-        persuasion: proficiencyComponents[74]
+        athletics: proficiencyComponents[57] === "true",
+        acrobatics: proficiencyComponents[58] === "true",
+        slightOfHand: proficiencyComponents[59] === "true",
+        stealth: proficiencyComponents[60] === "true",
+        arcana: proficiencyComponents[61] === "true",
+        history: proficiencyComponents[62] === "true",
+        investigation: proficiencyComponents[63] === "true",
+        nature: proficiencyComponents[64] === "true",
+        religion: proficiencyComponents[65] === "true",
+        animalHandling: proficiencyComponents[66] === "true",
+        insight: proficiencyComponents[67] === "true",
+        medicine: proficiencyComponents[68] === "true",
+        perception: proficiencyComponents[69] === "true",
+        survival: proficiencyComponents[70] === "true",
+        deception: proficiencyComponents[71] === "true",
+        intimidation: proficiencyComponents[72] === "true",
+        performance: proficiencyComponents[73] === "true",
+        persuasion: proficiencyComponents[74] === "true"
       },
       skillHalfProficienciesRoundedUp: {
-        athletics: proficiencyComponents[76],
-        acrobatics: proficiencyComponents[77],
-        slightOfHand: proficiencyComponents[78],
-        stealth: proficiencyComponents[79],
-        arcana: proficiencyComponents[80],
-        history: proficiencyComponents[81],
-        investigation: proficiencyComponents[82],
-        nature: proficiencyComponents[83],
-        religion: proficiencyComponents[84],
-        animalHandling: proficiencyComponents[85],
-        insight: proficiencyComponents[86],
-        medicine: proficiencyComponents[87],
-        perception: proficiencyComponents[88],
-        survival: proficiencyComponents[89],
-        deception: proficiencyComponents[90],
-        intimidation: proficiencyComponents[91],
-        performance: proficiencyComponents[92],
-        persuasion: proficiencyComponents[93]
+        athletics: proficiencyComponents[76] === "true",
+        acrobatics: proficiencyComponents[77] === "true",
+        slightOfHand: proficiencyComponents[78] === "true",
+        stealth: proficiencyComponents[79] === "true",
+        arcana: proficiencyComponents[80] === "true",
+        history: proficiencyComponents[81] === "true",
+        investigation: proficiencyComponents[82] === "true",
+        nature: proficiencyComponents[83] === "true",
+        religion: proficiencyComponents[84] === "true",
+        animalHandling: proficiencyComponents[85] === "true",
+        insight: proficiencyComponents[86] === "true",
+        medicine: proficiencyComponents[87] === "true",
+        perception: proficiencyComponents[88] === "true",
+        survival: proficiencyComponents[89] === "true",
+        deception: proficiencyComponents[90] === "true",
+        intimidation: proficiencyComponents[91] === "true",
+        performance: proficiencyComponents[92] === "true",
+        persuasion: proficiencyComponents[93] === "true"
       },
       skillMiscBonus: {
         athletics: parseInt(proficiencyComponents[19]),
@@ -211,11 +211,9 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
       const name = resource[0];
       const displayName = resource[1];
       const maxValue = parseInt(resource[2]);
-      // const currentValue = parseInt(resource[3]); // original
       const currentValue = parseInt(resource[2]); // current value is set to the max value
       const dieSize = parseInt(resource[4]);
       const spendable = parseInt(resource[5]); // spendable == 1, static == 2
-      // const reset = parseInt(resource[1]);
       const regainShort = parseInt(resource[6]);
       const regainLong = parseInt(resource[7]);
       resources.push({name,displayName,maxValue,currentValue,dieSize,spendable,regainShort,regainLong});
@@ -280,7 +278,7 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
     miscSpellDCBonus: parseInt(getData("miscSpellDCBonus")),
     // castingStatCode: parseInt(getData("castingStatCode")), // not used as of 7/18/23
 
-    offenseAbilityDisplay: parseInt(getData("offenseAbilityDisplay")),
+    // offenseAbilityDisplay: parseInt(getData("offenseAbilityDisplay")), // not used 7/22/23
 
     movementSpeed: {
       // baseSpeed: parseInt(getData("baseSpeed")), // Implemented in movement speed
@@ -299,26 +297,30 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
       burrowingNotes: ''
     },
 
+
+    name: getData("noteList").split('⊠')[15],
     classData: parseClasses(getData("classData").split('⊟')[0]),
+    characterLevel: getCharacterLevel(getData("classData").split('⊟')[0]),
+    experience: getData("noteList").split('⊠')[22],
     // classCustom: getData("noteList").split('⊠')[7], // User filled class
     // classLabel: getData("noteList").split('⊠')[16], // class user filled
-
-    characterLevel: getCharacterLevel(getData("classData").split('⊟')[0]),
-    resources: parseResources(getData("classData").split('⊟')[2]),
-    feats: getData("classData").split('⊟')[3].split('⊠').filter(el => el).sort(),
-    asi: getData("classData").split('⊟')[4].split('⊡'),
-
-    abilityScores: parseAbilityScores(getData("abilityScores")),
-
-    // weaponList: parseWeapons(getData("weaponList")), // TODO: fix weapon parsing
-
-    skillInfo: parseSkillInfo(getData("skillInfo")),
-    spellList: getData("spellList").split('⊠'),
-
-    get background() {return getData("classData").split('⊟')[9] === 'Custom' ? getData("noteList").split('⊠')[9] : getData("classData").split('⊟')[9]},
-
     race: getData("classData").split('⊟')[7],
     get raceLabel() {return getData("classData").split('⊟')[8] === 'Custom Lineage' ? getData("noteList").split('⊠')[8] : getData("classData").split('⊟')[8]},
+    skillInfo: parseSkillInfo(getData("skillInfo")),
+    get background() {return getData("classData").split('⊟')[9] === 'Custom' ? getData("noteList").split('⊠')[9] : getData("classData").split('⊟')[9]},
+    feats: getData("classData").split('⊟')[3].split('⊠').filter(el => el).sort(),
+    asi: getData("classData").split('⊟')[4].split('⊡'),
+    classFeatures: getData("classData").split('⊟')[1].split('⊠').filter(el => el),
+    abilityScores: parseAbilityScores(getData("abilityScores")),
+    features: getData("noteList").split('⊠')[0],
+
+
+    resources: parseResources(getData("classData").split('⊟')[2]),
+
+
+    // weaponList: parseWeapons(getData("weaponList")), // TODO: fix weapon parsing
+    // spellList: getData("spellList").split('⊠'), // TODO: add spell parsing
+
 
 
     description: {
@@ -345,6 +347,7 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
       },
     },
 
+
     notes: {
       organizations: '',
       allies: '',
@@ -353,7 +356,11 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
       other: getData("noteList").split('⊠')[6].split('\n').join()
     },
 
-    features: getData("noteList").split('⊠')[0],
+
+    featuresAndTraits: {
+
+    },
+
 
     proficienciesAndLanguages: {
       armorProficiencies: getData("noteList").split('⊠')[1].split("\n").filter(el => el).sort(),
@@ -364,16 +371,20 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
 
     equipment: getData("noteList").split('⊠')[5].split("\n").filter(el => el),
 
-    name: getData("noteList").split('⊠')[15],
-    money: {
-      cp: parseInt(getData("noteList").split('⊠')[17]),
-      sp: parseInt(getData("noteList").split('⊠')[18]),
-      ep: parseInt(getData("noteList").split('⊠')[19]),
-      gp: parseInt(getData("noteList").split('⊠')[20]),
-      pp: parseInt(getData("noteList").split('⊠')[21])
-    },
 
-    experience: getData("noteList").split('⊠')[22],
+
+
+    inventory: {
+      money: {
+        cp: parseInt(getData("noteList").split('⊠')[17]),
+        sp: parseInt(getData("noteList").split('⊠')[18]),
+        ep: parseInt(getData("noteList").split('⊠')[19]),
+        gp: parseInt(getData("noteList").split('⊠')[20]),
+        pp: parseInt(getData("noteList").split('⊠')[21])
+      },
+      equipment: {},
+
+    },
 
     hitDiceList: parseHitDice(getData("hitDiceList")),
 
