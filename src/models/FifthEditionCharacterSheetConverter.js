@@ -202,7 +202,7 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
       *  2 | max value
       *  3 | current value
       *  4 | size of the dice
-      *  5 | 1 === spendable, 2 === static
+      *  5 | 1 === spendable, 2 === static, 0 === never
       *  6 | number regained on short rest
       *  7 | number regained on a long red
       *  8 | ?
@@ -213,9 +213,20 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
       const maxValue = parseInt(resource[2]);
       const currentValue = parseInt(resource[2]); // current value is set to the max value
       const dieSize = parseInt(resource[4]);
-      const spendable = parseInt(resource[5]); // spendable == 1, static == 2
       const regainShort = parseInt(resource[6]);
       const regainLong = parseInt(resource[7]);
+
+      let spendable = parseInt(resource[5]);
+      if(spendable === 0) {
+        spendable = "never"
+      } else if(spendable === 1) {
+        spendable = "spendable"
+      } else if (spendable === 2) {
+        spendable = "static"
+      } else {
+        spendable = "Unknown"
+      }
+
       resources.push({name,displayName,maxValue,currentValue,dieSize,spendable,regainShort,regainLong});
     }
 
