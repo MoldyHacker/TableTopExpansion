@@ -18,13 +18,13 @@ export default defineComponent({
       $q: useQuasar(),
     }
   },
+
   methods: {
     showLoading () {
       this.$q.loading.show({
         message: 'Loading user profile. Hang on...',
       })
     },
-
     endLoading() {
       setTimeout(() => {this.$q.loading.hide()}, 100)
     },
