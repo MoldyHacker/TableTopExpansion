@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { db, storage } from "boot/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, getDoc, doc } from "firebase/firestore";
 import Character from "src/models/Character";
 import {useUserStore} from "stores/user-store";
 
@@ -25,38 +25,41 @@ export const useCharacterStore = defineStore('character', {
     //     })
     // },
 
-    activateCharacter(characterId) {
-      db
-        .doc(`characters/${characterId}`)
-        .onSnapshot((doc) => {
-          const tempCharacter = new Character(doc.id, doc.data());
-          if (!tempCharacter.isPublic && tempCharacter.userId === useUserStore().authUser.uid) {
-            this.activeCharacter = tempCharacter;
-          } else if (tempCharacter.isPublic) {
-            this.activeCharacter = tempCharacter;
-          } else {
-            this.activeCharacter = {permission: false}
-          }
-        })
+    async activateCharacter(characterId) {
+      const docRef = doc(db, `characters/${characterId}`);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        // this.activeCharacter = new Character(docSnap.id, docSnap.data());
+        const tempCharacter = new Character(docSnap.id, docSnap.data());
+        if (!tempCharacter.isPublic && tempCharacter.userId === useUserStore().authUser.uid) {
+          this.activeCharacter = tempCharacter;
+        } else if (tempCharacter.isPublic) {
+          this.activeCharacter = tempCharacter;
+        } else {
+          this.activeCharacter = {permission: false}
+        }
+      } else {
+        console.log('No such document!');
+      }
     },
 
     async getUserCharacters() {
       this.allCharacters = [];
 
       /// Get all characters for the user from the main collection of characters
-      // const q = query(collection(db, "characters"), where("userId", "==", useUserStore().authUser.uid));
-      // const querySnapshot = await getDocs(q);
-      // querySnapshot.forEach((doc) => {
-      //   console.log(doc.id, '=>', doc.data());
-      //   this.allCharacters.push(new Character(doc.id, doc.data()));
-      // });
-
-      /// Get all characters for the user from the user's subcollection of characters
-      const q2 = await getDocs(collection(db, `users/${useUserStore().authUser.uid}/characters/`));
-      q2.forEach((doc) => {
+      const q = query(collection(db, "characters"), where("userId", "==", useUserStore().authUser.uid));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());
         this.allCharacters.push(new Character(doc.id, doc.data()));
       });
+
+      /// Get all characters for the user from the user's subcollection of characters
+      // const q2 = await getDocs(collection(db, `users/${useUserStore().authUser.uid}/characters/`));
+      // q2.forEach((doc) => {
+      //   console.log(doc.id, '=>', doc.data());
+      //   this.allCharacters.push(new Character(doc.id, doc.data()));
+      // });
     },
 
     getCharacters() {
