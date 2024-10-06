@@ -1,5 +1,6 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia"
 import { db, storage } from "boot/firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import Character from "src/models/Character";
 import {useUserStore} from "stores/user-store";
 
@@ -39,22 +40,23 @@ export const useCharacterStore = defineStore('character', {
         })
     },
 
-    getUserCharacters() {
+    async getUserCharacters() {
       this.allCharacters = [];
-      db
-        // .collection(`users/${auth.currentUser.uid}/characters/`)
-        .collection(`characters/`).where("userId", "==", useUserStore().authUser.uid)
-        .onSnapshot((querySnapshot) => {
-          this.allCharacters.length = 0;
-          querySnapshot.forEach((doc) => {
-            console.log(doc.id, '=>', doc.data());
-            this.allCharacters.push(new Character(doc.id, doc.data()));
-          })
-        })
-      //   .catch((error) => {
-      //   console.error('Error retrieving collection from firestore', error);
-      // })
-      // console.log('array of characters', this.allCharacters);
+
+      /// Get all characters for the user from the main collection of characters
+      // const q = query(collection(db, "characters"), where("userId", "==", useUserStore().authUser.uid));
+      // const querySnapshot = await getDocs(q);
+      // querySnapshot.forEach((doc) => {
+      //   console.log(doc.id, '=>', doc.data());
+      //   this.allCharacters.push(new Character(doc.id, doc.data()));
+      // });
+
+      /// Get all characters for the user from the user's subcollection of characters
+      const q2 = await getDocs(collection(db, `users/${useUserStore().authUser.uid}/characters/`));
+      q2.forEach((doc) => {
+        console.log(doc.id, '=>', doc.data());
+        this.allCharacters.push(new Character(doc.id, doc.data()));
+      });
     },
 
     getCharacters() {

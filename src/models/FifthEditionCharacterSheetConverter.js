@@ -84,7 +84,6 @@ export default function fifthEditionCharacterSheetConverter(xmlData) {
 
   function parseSkillInfo(skillInfoString) {
     const proficiencyComponents = skillInfoString.split('⊠');
-    console.log(proficiencyComponents[9])
     return {
       skillProficiencies: {
         athletics: proficiencyComponents[0] === "true",

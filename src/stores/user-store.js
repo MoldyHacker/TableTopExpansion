@@ -1,8 +1,9 @@
 import {defineStore} from "pinia";
 import { auth } from 'boot/firebase'
 import AuthUser from 'src/models/AuthUser'
-import firebase from "firebase";
-
+// import firebase from "firebase/app";
+import {getAuth, signInWithEmailAndPassword, signInWithPopup, signOut} from 'firebase/auth';
+import { GoogleAuthProvider } from 'firebase/auth';
 /*
  * This is in case I want to use https://github.com/prazdevs/pinia-plugin-persistedstate
  * User Store: Handles user authentication, profile information, site settings, and user-related actions.
@@ -36,12 +37,12 @@ export const useUserStore = defineStore('user',{
     },
 
     async signInWithPopup() {
-      let provider = new firebase.auth.GoogleAuthProvider();
-      try {
-        await auth.signInWithPopup(provider);
-      } catch (error) {
-        console.error('Error during signInWithPopup', error);
-      }
+      const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+          .then((result) => {})
+          .catch((error) => {
+            console.error('Error during signInWithPopup', error);
+          });
     },
 
     onAuthStateChange() {
@@ -60,20 +61,20 @@ export const useUserStore = defineStore('user',{
         })
     },
 
-     registerUser(credentials) {
-      console.log('registerUser action', credentials)
-      firebase.auth().createUserWithEmailAndPassword(credentials.email, credentials.password)
-        .then((userCredential) => {
-          // Signed in
-          var user = userCredential.user;
-          // ...
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // ..
-        });
-    },
+    // registerUser(credentials) {
+    //   console.log('registerUser action', credentials)
+    //   firebase.auth().createUserWithEmailAndPassword(credentials.email, credentials.password)
+    //     .then((userCredential) => {
+    //       // Signed in
+    //       var user = userCredential.user;
+    //       // ...
+    //     })
+    //     .catch((error) => {
+    //       var errorCode = error.code;
+    //       var errorMessage = error.message;
+    //       // ..
+    //     });
+    // },
   },
   getters: {
     isAuthenticated(state){return !!state.authUser}
